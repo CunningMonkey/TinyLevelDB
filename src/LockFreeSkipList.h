@@ -5,37 +5,38 @@
 
 const int MAX_LEVEL = 8;
 
-template <typename Key, typename Value>
+template <typename Key, typename Value, typename Comparator = std::less<Key>>
 class LockFreeSkipList
 {
 private:
     struct Node {
         Key key;
         Value value;
-        Node* forward[MAX_LEVEL];
+        Node* nexts[MAX_LEVEL];
 
         Node(Key key, Value value) : key(key), value(value)
         {
             for (int i = 0; i < MAX_LEVEL; ++i)
             {
-                forward[i] = nullptr;
+                nexts[i] = nullptr;
             }
         }
     };
 
     Node _head;
     Node _tail;
+    Comparator _comparator;
 
 public:
-    LockFreeSkipList() : _head(Node(0, 0)), _tail(Node(0, 0)){}
+    LockFreeSkipList(const Comparator& cmp=Comparator())
+     : _head(Node(0, 0)), _tail(Node(0, 0)), _comparator(cmp){}
     
     ~LockFreeSkipList() {}
 
-    bool contains(Key key) {return true;}
+    Value* get(const Key& key);
+    bool put(const Key& key, const Value& value);
 
-    bool insert(Key key, Value value) {return true;}
-
-    bool remove(Key key) {return true;}
+    bool remove(const Key& key);
 
 private:
     int randomLevel() {
@@ -47,3 +48,30 @@ private:
         return lvl;
     }
 };
+
+template<typename Key, typename Value, typename Comparator>
+Value* LockFreeSkipList<Key, Value, Comparator>::get(const Key& key) {
+    return nullptr;
+}
+
+template <typename Key, typename Value, typename Comparator>
+bool LockFreeSkipList<Key, Value, Comparator>::put(const Key &key, const Value &value)
+{
+
+    return false;
+}
+
+template <typename Key, typename Value, typename Comparator>
+bool LockFreeSkipList<Key, Value, Comparator>::remove(const Key &key)
+{
+    int level = MAX_LEVEL;
+    Node* n = _head.nexts[level-1];
+    Node* prev = _head;
+    while(level > 0) {
+        while(n != nullptr) {
+            if (n->key)
+        }
+        --level;
+    }
+    return false;
+}
