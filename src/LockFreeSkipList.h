@@ -51,6 +51,25 @@ private:
 
 template<typename Key, typename Value, typename Comparator>
 Value* LockFreeSkipList<Key, Value, Comparator>::get(const Key& key) {
+    int level = MAX_LEVEL;
+    Node* n = _head.nexts[level-1];
+    Node* prev = _head;
+    while(level > 0) {
+        while(n != nullptr) {
+            int tmp = _comparator(n->key, key)
+            if (tmp == 0)
+            {
+                return &n->value;
+            } else if (tmp == 1) {
+                n = prev;
+                break;
+            } else {
+                prev = n;
+                n = n->nexts[level-1];
+            }
+        }
+        --level;
+    }
     return nullptr;
 }
 
@@ -69,8 +88,16 @@ bool LockFreeSkipList<Key, Value, Comparator>::remove(const Key &key)
     Node* prev = _head;
     while(level > 0) {
         while(n != nullptr) {
-            if (n->key) {
-                
+            int tmp = _comparator(n->key, key)
+            if (tmp == 0)
+            {
+                n->value = value;
+            } else if (tmp == 1) {
+                n = prev;
+                break;
+            } else {
+                prev = n;
+                n = n->nexts[level-1];
             }
         }
         --level;
