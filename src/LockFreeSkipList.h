@@ -69,7 +69,9 @@ bool LockFreeSkipList<Key, Value, Comparator>::remove(const Key &key)
     Node* prev = _head;
     while(level > 0) {
         while(n != nullptr) {
-            if (n->key)
+            if (n->key) {
+                
+            }
         }
         --level;
     }

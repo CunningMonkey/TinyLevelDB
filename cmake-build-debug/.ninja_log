@@ -1,7 +1,0 @@
-# ninja log v5
-1	624	1696931769743309256	tests/googletest/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o	4f3ab451ae0a3784
-0	641	1696931769761195422	tests/CMakeFiles/tests.dir/LockFreeSkipListTests.cpp.o	b64dd7064470c10b
-0	1489	1696931770605105722	tests/googletest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o	9f37210633545fdc
-1489	1523	1696931770646569000	lib/libgtest.a	a391932b42526af9
-1523	1538	1696931770660897000	lib/libgtest_main.a	57ee58291f3a73f7
-1538	1586	1696931770708518811	tests/tests	b6f108e8cc073c9e
