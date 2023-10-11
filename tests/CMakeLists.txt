@@ -10,7 +10,7 @@ add_executable(tests SkipListTests.cpp)
 
 # 链接测试可执行文件到我们的库和GoogleTest
 target_link_libraries(tests skiplist gtest_main)
-target_link_libraries(lock_free_tests lockfreeskiplist gtest_main)
+target_link_libraries(lock_free_tests skiplist gtest_main)
 
 # 添加测试
 enable_testing()

@@ -18,8 +18,8 @@ private:
         Value value;
         Node *nexts[MAX_LEVEL];
 
-        Node(const Key& key, const Value& value)
-        {   
+        Node(Key key, Value value) : key(key), value(value)
+        {
             for (int i = 0; i < MAX_LEVEL; ++i)
             {
                 nexts[i] = nullptr;
@@ -43,14 +43,7 @@ public:
         }
     }
 
-    ~SkipList() {
-        Node* n = &_head;
-        while(n != &_tail) {
-            Node* next = n->nexts[0];
-            delete n;
-            n = next;
-        }
-    }
+    ~SkipList() {}
 
     Value *get(const Key &key);
     void put(const Key &key, const Value &value);
@@ -169,7 +162,7 @@ void SkipList<Key, Value, Comparator>::print()
         std::cout << "head-";
         Node* n = _head.nexts[i];
         while(n && n != &_tail) {
-            std::cout << n->key << ": " << n->value << "-";
+            std::cout << n->key << ":" << n->value << "--";
             n = n->nexts[i];
         }
         std::cout << "tail" << std::endl;
