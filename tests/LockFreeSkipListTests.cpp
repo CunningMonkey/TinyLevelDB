@@ -22,6 +22,10 @@ struct Comparator
     }
 };
 
+int random_int(int min, int max) {
+    return min + std::rand() % (max - min + 1);
+}
+
 TEST(LockFreeSkipListTest, PutAndGet)
 {
     LockFreeSkipList<int, int, Comparator> skipList;
@@ -64,7 +68,7 @@ TEST(LockFreeSkipListTest, RemoveNonExistent)
 TEST(LockFreeSkipListTest, MultipleInsertAndRetrieve)
 {
     LockFreeSkipList<int, int, Comparator> skipList;
-    const int N = 10;
+    const int N = 100;
 
     // 插入多个值
     for (int i = 0; i < N; i++)
@@ -79,7 +83,51 @@ TEST(LockFreeSkipListTest, MultipleInsertAndRetrieve)
         ASSERT_NE(val, nullptr);
         EXPECT_EQ(*val, i * 100);
     }
-    skipList.print();
+}
+
+TEST(LockFreeSkipListTest, RandomOperations) {
+    LockFreeSkipList<int, int, Comparator> skipList;
+    std::map<int, int> reference; // 用于参考的标准map
+
+    for (int i = 0; i < 1000; ++i) {
+        int key = random_int(1, 1000);
+        int value = random_int(1, 1000);
+
+        skipList.put(key, value);
+        reference[key] = value;
+
+        // 随机选择是否删除一个键
+        if (random_int(0, 1)) {
+            int key_to_remove = random_int(1, 1000);
+            skipList.remove(key_to_remove);
+            reference.erase(key_to_remove);
+        }
+    }
+
+    for (const auto& pair : reference) {
+        ASSERT_EQ(*skipList.get(pair.first), pair.second);
+    }
+}
+
+TEST(LockFreeSkipListTest, BoundaryConditions) {
+    LockFreeSkipList<int, int, Comparator> skipList;
+
+    // 测试空跳表的获取和删除操作
+    ASSERT_EQ(skipList.get(1), nullptr);
+    ASSERT_FALSE(skipList.remove(1));
+
+    // 插入一个键并多次更新它
+    skipList.put(1, 100);
+    ASSERT_EQ(*skipList.get(1), 100);
+    skipList.put(1, 200);
+    ASSERT_EQ(*skipList.get(1), 200);
+    skipList.put(1, 300);
+    ASSERT_EQ(*skipList.get(1), 300);
+
+    // 删除键并尝试重新删除
+    ASSERT_TRUE(skipList.remove(1));
+    ASSERT_FALSE(skipList.remove(1));
+    ASSERT_EQ(skipList.get(1), nullptr);
 }
 
 TEST(LockFreeSkipListTest, OverwriteAndRetrieve)
@@ -129,6 +177,29 @@ TEST(LockFreeSkipListTest, RemoveNonExistentMultipleTimes)
     EXPECT_FALSE(removedFirstTime);
     EXPECT_FALSE(removedSecondTime);
 }
+
+TEST(LockFreeSkipListTest, BasicOperations) {
+    LockFreeSkipList<int, int, Comparator> skipList;
+
+    skipList.put(5, 50);
+    skipList.put(3, 30);
+    skipList.put(8, 80);
+
+    // Test get method
+    ASSERT_EQ(*skipList.get(5), 50);
+    ASSERT_EQ(*skipList.get(3), 30);
+    ASSERT_EQ(skipList.get(7), nullptr);
+
+    // Test update value
+    skipList.put(5, 55);
+    ASSERT_EQ(*skipList.get(5), 55);
+
+    // Test remove method
+    ASSERT_TRUE(skipList.remove(5));
+    ASSERT_EQ(skipList.get(5), nullptr);
+    ASSERT_FALSE(skipList.remove(5));
+}
+
 
 int main(int argc, char **argv)
 {

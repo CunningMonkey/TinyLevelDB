@@ -70,29 +70,14 @@ private:
         {
             while (true)
             {
-                if (n == &_head)
-                {
-                    prev = n;
-                    n = n->nexts[level];
-                }
-                if (n == &_tail)
+                if (n == &_tail ||  _comparator(n->key, key) >= 0)
                 {
                     n = prev;
                     prevs[level] = n;
                     break;
                 }
-                int tmp = _comparator(n->key, key);
-                if (tmp >= 0)
-                {
-                    n = prev;
-                    prevs[level] = n;
-                    break;
-                }
-                if (tmp == -1)
-                {
-                    prev = n;
-                    n = n->nexts[level];
-                }
+                prev = n;
+                n = n->nexts[level];
             }
         }
         return n;
@@ -124,7 +109,7 @@ void LockFreeSkipList<Key, Value, Comparator>::put(const Key &key, const Value &
     Node *n = findLessThanKey(key, prevs);
     Node *next = n->nexts[0];
     assert(next != nullptr);
-    if (next != &_tail && _comparator(n->key, key) == 0) {
+    if (next != &_tail && _comparator(next->key, key) == 0) {
         next->value = value;
         return;
     }
@@ -142,47 +127,23 @@ void LockFreeSkipList<Key, Value, Comparator>::put(const Key &key, const Value &
 template <typename Key, typename Value, typename Comparator>
 bool LockFreeSkipList<Key, Value, Comparator>::remove(const Key &key)
 {
-    int level = MAX_LEVEL;
-    Node *n = _head.nexts[level - 1];
-    Node *prev = &_head;
-    for (int level = MAX_LEVEL-1; level >= 0; --level)
+    Node* prevs[MAX_LEVEL];
+    Node *n = findLessThanKey(key, prevs);
+    Node *next = n->nexts[0];
+    assert(next != nullptr);
+    if (next == &_tail) {
+        return false;
+    }
+
+    if (_comparator(next->key, key) == 0)
     {
-        while (true)
-        {
-            if (n == &_head)
-            {
-                prev = n;
-                n = n->nexts[level];
-            }
-            if (n == &_tail)
-            {
-                n = prev;
-                break;
-            }
-            int tmp = _comparator(n->key, key);
-            if (tmp == 1)
-            {
-                n = prev;
-                break;
-            }
-            if (tmp == 0)
-            {
-                for (int i = 0; i < MAX_LEVEL; ++i)
-                {
-                    if (n->nexts[i] != nullptr)
-                    {
-                        prev->nexts[i] = n->nexts[i];
-                    }
-                }
-                delete n;
-                return true;
-            }
-            if (tmp == -1)
-            {
-                prev = n;
-                n = n->nexts[level];
+        for (int level = 0; level < MAX_LEVEL; ++level) {
+            if (next->nexts[level] != nullptr) {
+                prevs[level]->nexts[level] = next->nexts[level];
             }
         }
+        delete next;
+        return true;
     }
     return false;
 }
@@ -194,7 +155,7 @@ void LockFreeSkipList<Key, Value, Comparator>::print()
         std::cout << "head-";
         Node* n = _head.nexts[i];
         while(n && n != &_tail) {
-            std::cout << n->value << "-";
+            std::cout << n->key << ": " << n->value << "-";
             n = n->nexts[i];
         }
         std::cout << "tail" << std::endl;
