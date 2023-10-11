@@ -115,13 +115,15 @@ void LockFreeSkipList<Key, Value, Comparator>::put(const Key &key, const Value &
     }
 
     int level = randomLevel();
-    Node *new_node = new Node(key, value);
+    std::unique_ptr<Node> new_node(new Node(key, value));
     for (int i = 0; i < level; ++i)
     {
         next = prevs[i]->nexts[i];
-        prevs[i]->nexts[i] = new_node;
+        prevs[i]->nexts[i] = new_node.get();
         new_node->nexts[i] = next;
     }
+
+    new_node.release();
 }
 
 template <typename Key, typename Value, typename Comparator>
