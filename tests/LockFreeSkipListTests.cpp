@@ -79,6 +79,7 @@ TEST(LockFreeSkipListTest, MultipleInsertAndRetrieve)
         ASSERT_NE(val, nullptr);
         EXPECT_EQ(*val, i * 100);
     }
+    skipList.print();
 }
 
 TEST(LockFreeSkipListTest, OverwriteAndRetrieve)
