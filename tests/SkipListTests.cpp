@@ -1,6 +1,6 @@
-#include "../src/LockFreeSkipList.h" // Assuming your class is saved in this header file
+#include "../src/SkipList.h" // Assuming your class is saved in this header file
 #include <gtest/gtest.h>
-#include<thread>
+#include <thread>
 
 typedef uint64_t Key;
 
@@ -27,9 +27,9 @@ int random_int(int min, int max) {
     return min + std::rand() % (max - min + 1);
 }
 
-TEST(LockFreeSkipListTest, PutAndGet)
+TEST(SkipListTest, PutAndGet)
 {
-    LockFreeSkipList<int, int, Comparator> skipList;
+    SkipList<int, int, Comparator> skipList;
 
     // Inserting a value
     skipList.put(1, 100);
@@ -40,9 +40,9 @@ TEST(LockFreeSkipListTest, PutAndGet)
     EXPECT_EQ(*val, 100);
 }
 
-TEST(LockFreeSkipListTest, PutAndRemove)
+TEST(SkipListTest, PutAndRemove)
 {
-    LockFreeSkipList<int, int, Comparator> skipList;
+    SkipList<int, int, Comparator> skipList;
 
     // Inserting a value
     skipList.put(2, 200);
@@ -54,9 +54,9 @@ TEST(LockFreeSkipListTest, PutAndRemove)
     EXPECT_EQ(val, nullptr);
 }
 
-TEST(LockFreeSkipListTest, RemoveNonExistent)
+TEST(SkipListTest, RemoveNonExistent)
 {
-    LockFreeSkipList<int, int, Comparator> skipList;
+    SkipList<int, int, Comparator> skipList;
 
     // Try removing a non-existent value
     bool removed = skipList.remove(3);
@@ -66,9 +66,9 @@ TEST(LockFreeSkipListTest, RemoveNonExistent)
     EXPECT_EQ(val, nullptr);
 }
 
-TEST(LockFreeSkipListTest, MultipleInsertAndRetrieve)
+TEST(SkipListTest, MultipleInsertAndRetrieve)
 {
-    LockFreeSkipList<int, int, Comparator> skipList;
+    SkipList<int, int, Comparator> skipList;
     const int N = 100;
 
     // 插入多个值
@@ -86,8 +86,8 @@ TEST(LockFreeSkipListTest, MultipleInsertAndRetrieve)
     }
 }
 
-TEST(LockFreeSkipListTest, RandomOperations) {
-    LockFreeSkipList<int, int, Comparator> skipList;
+TEST(SkipListTest, RandomOperations) {
+    SkipList<int, int, Comparator> skipList;
     std::map<int, int> reference; // 用于参考的标准map
 
     for (int i = 0; i < 1000; ++i) {
@@ -110,8 +110,8 @@ TEST(LockFreeSkipListTest, RandomOperations) {
     }
 }
 
-TEST(LockFreeSkipListTest, BoundaryConditions) {
-    LockFreeSkipList<int, int, Comparator> skipList;
+TEST(SkipListTest, BoundaryConditions) {
+    SkipList<int, int, Comparator> skipList;
 
     // 测试空跳表的获取和删除操作
     ASSERT_EQ(skipList.get(1), nullptr);
@@ -131,9 +131,9 @@ TEST(LockFreeSkipListTest, BoundaryConditions) {
     ASSERT_EQ(skipList.get(1), nullptr);
 }
 
-TEST(LockFreeSkipListTest, OverwriteAndRetrieve)
+TEST(SkipListTest, OverwriteAndRetrieve)
 {
-    LockFreeSkipList<int, int, Comparator> skipList;
+    SkipList<int, int, Comparator> skipList;
 
     // 插入一个值，然后覆盖它
     skipList.put(5, 500);
@@ -144,9 +144,9 @@ TEST(LockFreeSkipListTest, OverwriteAndRetrieve)
     EXPECT_EQ(*val, 600);
 }
 
-TEST(LockFreeSkipListTest, InsertDeleteInsertRetrieve)
+TEST(SkipListTest, InsertDeleteInsertRetrieve)
 {
-    LockFreeSkipList<int, int, Comparator> skipList;
+    SkipList<int, int, Comparator> skipList;
 
     // 插入、删除，然后再插入相同的键
     skipList.put(7, 700);
@@ -158,18 +158,18 @@ TEST(LockFreeSkipListTest, InsertDeleteInsertRetrieve)
     EXPECT_EQ(*val, 800);
 }
 
-TEST(LockFreeSkipListTest, NonExistentElement)
+TEST(SkipListTest, NonExistentElement)
 {
-    LockFreeSkipList<int, int, Comparator> skipList;
+    SkipList<int, int, Comparator> skipList;
 
     // 查找不存在的元素
     int *val = skipList.get(999);
     EXPECT_EQ(val, nullptr);
 }
 
-TEST(LockFreeSkipListTest, RemoveNonExistentMultipleTimes)
+TEST(SkipListTest, RemoveNonExistentMultipleTimes)
 {
-    LockFreeSkipList<int, int, Comparator> skipList;
+    SkipList<int, int, Comparator> skipList;
 
     // 多次尝试删除一个不存在的值
     bool removedFirstTime = skipList.remove(8);
@@ -179,8 +179,8 @@ TEST(LockFreeSkipListTest, RemoveNonExistentMultipleTimes)
     EXPECT_FALSE(removedSecondTime);
 }
 
-TEST(LockFreeSkipListTest, BasicOperations) {
-    LockFreeSkipList<int, int, Comparator> skipList;
+TEST(SkipListTest, BasicOperations) {
+    SkipList<int, int, Comparator> skipList;
 
     skipList.put(5, 50);
     skipList.put(3, 30);
@@ -204,7 +204,7 @@ TEST(LockFreeSkipListTest, BasicOperations) {
 class ConcurrentTest {
 private:
     static constexpr int K = 100; // Number of keys
-    LockFreeSkipList<int, int, Comparator> list_;
+    SkipList<int, int, Comparator> list_;
     std::atomic<int> counter_;
 
 public:
@@ -245,6 +245,12 @@ public:
         }
     }
 };
+
+TEST(SkipListTest, ConcurrentReadWrite) {
+    ConcurrentTest test;
+    test.Run();
+}
+
 
 int main(int argc, char **argv)
 {

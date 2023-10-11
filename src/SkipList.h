@@ -9,7 +9,7 @@
 const int MAX_LEVEL = 5;
 
 template <typename Key, typename Value, typename Comparator>
-class LockFreeSkipList
+class SkipList
 {
 private:
     struct Node
@@ -18,8 +18,8 @@ private:
         Value value;
         Node *nexts[MAX_LEVEL];
 
-        Node(Key key, Value value) : key(key), value(value)
-        {
+        Node(const Key& key, const Value& value)
+        {   
             for (int i = 0; i < MAX_LEVEL; ++i)
             {
                 nexts[i] = nullptr;
@@ -33,7 +33,7 @@ private:
     std::mutex _mutex;
 
 public:
-    LockFreeSkipList(const Comparator &cmp = Comparator())
+    SkipList(const Comparator &cmp = Comparator())
         : _head(Node(0, 0)), _tail(Node(0, 0)), _comparator(cmp)
     {
         std::srand(std::time(nullptr));
@@ -43,7 +43,14 @@ public:
         }
     }
 
-    ~LockFreeSkipList() {}
+    ~SkipList() {
+        Node* n = &_head;
+        while(n != &_tail) {
+            Node* next = n->nexts[0];
+            delete n;
+            n = next;
+        }
+    }
 
     Value *get(const Key &key);
     void put(const Key &key, const Value &value);
@@ -87,7 +94,7 @@ private:
 };
 
 template <typename Key, typename Value, typename Comparator>
-Value *LockFreeSkipList<Key, Value, Comparator>::get(const Key &key)
+Value *SkipList<Key, Value, Comparator>::get(const Key &key)
 {
     std::lock_guard<std::mutex> lock(_mutex);
     Node* prevs[MAX_LEVEL];
@@ -106,7 +113,7 @@ Value *LockFreeSkipList<Key, Value, Comparator>::get(const Key &key)
 }
 
 template <typename Key, typename Value, typename Comparator>
-void LockFreeSkipList<Key, Value, Comparator>::put(const Key &key, const Value &value)
+void SkipList<Key, Value, Comparator>::put(const Key &key, const Value &value)
 {
     std::lock_guard<std::mutex> lock(_mutex);
     Node* prevs[MAX_LEVEL];
@@ -131,7 +138,7 @@ void LockFreeSkipList<Key, Value, Comparator>::put(const Key &key, const Value &
 }
 
 template <typename Key, typename Value, typename Comparator>
-bool LockFreeSkipList<Key, Value, Comparator>::remove(const Key &key)
+bool SkipList<Key, Value, Comparator>::remove(const Key &key)
 {
     std::lock_guard<std::mutex> lock(_mutex);
     Node* prevs[MAX_LEVEL];
@@ -156,13 +163,13 @@ bool LockFreeSkipList<Key, Value, Comparator>::remove(const Key &key)
 }
 
 template <typename Key, typename Value, typename Comparator>
-void LockFreeSkipList<Key, Value, Comparator>::print()
+void SkipList<Key, Value, Comparator>::print()
 {
     for (int i = MAX_LEVEL - 1; i >= 0; --i) {
         std::cout << "head-";
         Node* n = _head.nexts[i];
         while(n && n != &_tail) {
-            std::cout << n->key << ":" << n->value << "--";
+            std::cout << n->key << ": " << n->value << "-";
             n = n->nexts[i];
         }
         std::cout << "tail" << std::endl;
