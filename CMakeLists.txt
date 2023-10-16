@@ -1,11 +1,34 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(LockFreeSkipList)
+# 设置项目名称和版本
+project(SkipListProject VERSION 1.0)
 
-# 将C++标准设置为C++11，因为你的代码中使用了C++11的功能
-set(CMAKE_CXX_STANDARD 14)
+# 设置C++标准
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+include_directories(${CMAKE_SOURCE_DIR})
 
-# 加入src和tests目录
-add_subdirectory(src)
-add_subdirectory(tests)
-add_subdirectory(util)
+# 添加googletest库
+add_subdirectory(third_party/googletest)
+
+# 添加util目录中的文件作为库
+add_library(arena util/arena.cpp)
+
+# 将src目录下的所有源文件添加到主项目
+file(GLOB SOURCES "src/*.h")
+file(GLOB UTIL "util/*.h")
+
+# 添加可执行文件
+add_executable(SkipListTest tests/SkipListTests.cpp ${SOURCES} ${UTIL})
+
+# 链接arena库和gtest库到可执行文件
+target_link_libraries(SkipListTest arena gtest_main)
+
+# 启用测试
+enable_testing()
+
+# 添加一个简单的测试来运行
+add_test(
+    NAME SkipListTest
+    COMMAND SkipListTest
+)
