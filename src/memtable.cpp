@@ -41,7 +41,7 @@ bool MemTable::Get(Slice &key, uint64_t sequence_num, std::string &value)
         return false;
     }
     if (_cmp(res, lookup_key.c_str()) == 0) {
-        uint64_t 
+        // uint64_t 
     } else {
         return false;
     }

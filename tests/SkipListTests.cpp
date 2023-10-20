@@ -110,7 +110,7 @@ public:
 
     void ReadStep()
     {
-        for (int i = 0; i < K; i++)
+        for (int i = 0; i < 10; i++)
         {
             auto val = _list.Get(i);
             if (val)
