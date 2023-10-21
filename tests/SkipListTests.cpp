@@ -1,4 +1,4 @@
-#include "../src/SkipList.h" // Assuming your class is saved in this header file
+#include "../src/skiplist.h" // Assuming your class is saved in this header file
 #include <gtest/gtest.h>
 #include <thread>
 #include <algorithm>
@@ -89,7 +89,7 @@ TEST(SkipListTest, RandomOperations)
 class ConcurrentTest
 {
 private:
-    static constexpr int K = 100; // Number of keys
+    static constexpr int K = 10000; // Number of keys
     SkipList<int, Comparator> _list;
     // std::atomic<int> _counter;
     Arena _arena;
@@ -110,7 +110,7 @@ public:
 
     void ReadStep()
     {
-        for (int i = 0; i < K; i++)
+        for (int i = 0; i < 10; i++)
         {
             auto val = _list.Get(i);
             if (val)
@@ -124,7 +124,7 @@ public:
     {
         std::vector<std::thread> readers;
 
-        for (int i = 0; i < K; i++)
+        for (int i = 0; i < 10; i++)
         {
             readers.push_back(std::thread(&ConcurrentTest::ReadStep, this));
         }
@@ -133,7 +133,6 @@ public:
         writer.join();
         for (auto &t : readers)
             t.join();
-        // _list.print();
         for (int i = 0; i < K; i++)
         {
             auto val = _list.Get(i);

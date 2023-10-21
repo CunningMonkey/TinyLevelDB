@@ -1,7 +1,6 @@
-#include <atomic>
-#include <cstdlib>
-#include <limits>
-#include <memory>
+#ifndef SKIPLIST
+#define SKIPLIST
+
 #include <cassert>
 #include <iostream>
 #include <mutex>
@@ -189,3 +188,5 @@ typename SkipList<Key, Comparator>::Node *SkipList<Key, Comparator>::newNode(
     char *_nodememory = _arena->AllocateAligned(sizeof(Node));
     return new (_nodememory) Node(key);
 }
+
+#endif
