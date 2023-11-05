@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 #include <thread>
 #include <algorithm>
+#include <iostream>
 
 typedef uint64_t Key;
 
@@ -49,16 +50,15 @@ TEST(SkipListTest, MultipleInsertAndRetrieve)
     SkipList<int, Comparator> skipList(cmp, &arena);
     const int N = 10;
 
-    for (int i = 0; i < N; i++)
+    for (int i = -N; i < N; i++)
     {
-        skipList.Put(i * 100);
+        skipList.Put(i);
     }
-
     std::vector<int *> keys = skipList.iterate();
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < 2 * N; i++)
     {
         int key = *keys[i];
-        ASSERT_EQ(key, i * 100);
+        ASSERT_EQ(key, i - N);
     }
 }
 
@@ -71,7 +71,7 @@ TEST(SkipListTest, RandomOperations)
 
     for (int i = 0; i < 100; ++i)
     {
-        int key = random_int(1, 100);
+        int key = random_int(-100, 100);
 
         skipList.Put(key);
         reference.push_back(key);
@@ -102,7 +102,7 @@ public:
 
     void WriteStep()
     {
-        for (int i = 0; i < K; ++i)
+        for (int i = -K; i < K; ++i)
         {
             _list.Put(i);
         }
@@ -133,7 +133,7 @@ public:
         writer.join();
         for (auto &t : readers)
             t.join();
-        for (int i = 0; i < K; i++)
+        for (int i = -K; i < K; i++)
         {
             auto val = _list.Get(i);
             ASSERT_NE(val, nullptr);

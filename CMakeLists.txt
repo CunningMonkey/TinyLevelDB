@@ -15,14 +15,16 @@ add_subdirectory(third_party/googletest)
 add_library(arena util/arena.cpp)
 
 # 将src目录下的所有源文件添加到主项目
-file(GLOB SOURCES "src/*.h")
+file(GLOB SOURCES "src/*")
 file(GLOB UTIL "util/*.h")
 
 # 添加可执行文件
 add_executable(SkipListTest tests/SkipListTests.cpp ${SOURCES} ${UTIL})
+add_executable(MemTableTest tests/MemTableTests.cpp ${SOURCES} ${UTIL})
 
 # 链接arena库和gtest库到可执行文件
 target_link_libraries(SkipListTest arena gtest_main)
+target_link_libraries(MemTableTest arena gtest_main)
 
 # 启用测试
 enable_testing()
@@ -32,3 +34,5 @@ add_test(
     NAME SkipListTest
     COMMAND SkipListTest
 )
+
+add_test(NAME memtable_test COMMAND memtable_test)

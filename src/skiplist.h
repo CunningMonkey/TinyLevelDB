@@ -1,5 +1,4 @@
-#ifndef SKIPLIST
-#define SKIPLIST
+#pragma once
 
 #include <cassert>
 #include <iostream>
@@ -59,6 +58,21 @@ public:
     void print();
     std::vector<Key *> iterate();
 
+    class Iterator
+    {
+    public:
+        explicit Iterator(const SkipList *list);
+
+        bool Valid() const;
+        const Key &key() const;
+        void Next();
+        void SeekToFirst();
+
+    private:
+        Node *_current;
+        const SkipList *_skiplist;
+    };
+
 private:
     int randomLevel()
     {
@@ -76,13 +90,17 @@ private:
 
     Node *findLessThan(const Key &key, Node *prevs[MAX_LEVEL])
     {
-        int level = MAX_LEVEL;
-        Node *n = _head.nexts[level - 1];
+        Node *n = _head.nexts[MAX_LEVEL - 1];
         Node *prev = &_head;
         for (int level = MAX_LEVEL - 1; level >= 0; --level)
         {
             while (true)
             {
+                if (n == &_head)
+                {
+                    n = _head.nexts[level];
+                    prev = &_head;
+                }
                 if (n == nullptr || _comparator(n->key, key) >= 0)
                 {
                     n = prev;
@@ -98,6 +116,31 @@ private:
 
     Node *newNode(const Key &key);
 };
+
+template <typename Key, typename Comparator>
+inline bool SkipList<Key, Comparator>::Iterator::Valid() const
+{
+    return _current == nullptr;
+}
+
+template <typename Key, typename Comparator>
+inline const Key &SkipList<Key, Comparator>::Iterator::key() const
+{
+    return _current->key;
+}
+
+template <typename Key, typename Comparator>
+inline void SkipList<Key, Comparator>::Iterator::Next()
+{
+    assert(Valid());
+    _current = _current->nexts[0];
+}
+
+template <typename Key, typename Comparator>
+inline void SkipList<Key, Comparator>::Iterator::SeekToFirst()
+{
+    _current = (_skiplist->_head).nexts[0];
+}
 
 template <typename Key, typename Comparator>
 Key *SkipList<Key, Comparator>::Get(const Key &key)
@@ -155,11 +198,11 @@ void SkipList<Key, Comparator>::print()
 {
     for (int i = MAX_LEVEL - 1; i >= 0; --i)
     {
-        std::cout << "head-";
+        std::cout << "head -> ";
         Node *n = _head.nexts[i];
         while (n && n != nullptr)
         {
-            std::cout << n->key << "--";
+            std::cout << n->key << " -> ";
             n = n->nexts[i];
         }
         std::cout << "tail" << std::endl;
@@ -188,5 +231,3 @@ typename SkipList<Key, Comparator>::Node *SkipList<Key, Comparator>::newNode(
     char *_nodememory = _arena->AllocateAligned(sizeof(Node));
     return new (_nodememory) Node(key);
 }
-
-#endif

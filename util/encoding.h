@@ -1,6 +1,7 @@
-#ifndef ENCODING
-#define ENCODING
+#pragma once
+
 #include <cstdint>
+#include "src/slice.h"
 
 enum ValueType
 {
@@ -8,8 +9,8 @@ enum ValueType
     kTypeValue = 0x1
 };
 
-const char *GetVarint32PtrFallback(const char *p, const char *limit,
-                                   uint32_t *value)
+const inline char *GetVarint32PtrFallback(const char *p, const char *limit,
+                                          uint32_t *value)
 {
     uint32_t result = 0;
     for (uint32_t shift = 0; shift <= 28 && p < limit; shift += 7)
@@ -45,6 +46,4 @@ inline const char *GetVarint32Ptr(const char *p, const char *limit,
         }
     }
     return GetVarint32PtrFallback(p, limit, value);
-}
-
-#endif
+};
