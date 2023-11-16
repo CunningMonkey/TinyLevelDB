@@ -1,4 +1,4 @@
-#include "../src/skiplist.h" // Assuming your class is saved in this header file
+#include "skiplist.h" // Assuming your class is saved in this header file
 #include <gtest/gtest.h>
 #include <thread>
 #include <algorithm>

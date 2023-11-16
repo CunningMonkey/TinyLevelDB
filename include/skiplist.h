@@ -5,8 +5,8 @@
 #include <mutex>
 #include <shared_mutex>
 #include <vector>
-#include "util/arena.h"
-#include "util/random.h"
+#include "arena.h"
+#include "random.h"
 
 const int MAX_LEVEL = 5;
 
@@ -116,6 +116,12 @@ private:
 
     Node *newNode(const Key &key);
 };
+
+template <typename Key, typename Comparator>
+inline SkipList<Key, Comparator>::Iterator::Iterator(const SkipList *list)
+{
+    _skiplist = list;
+}
 
 template <typename Key, typename Comparator>
 inline bool SkipList<Key, Comparator>::Iterator::Valid() const

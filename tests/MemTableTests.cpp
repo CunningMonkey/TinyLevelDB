@@ -1,4 +1,4 @@
-#include "../src/memtable.h"
+#include "memtable.h"
 #include <gtest/gtest.h>
 #include <random>
 

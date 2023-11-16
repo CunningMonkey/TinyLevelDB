@@ -18,8 +18,7 @@
 #include <cassert>
 #include <cstring>
 #include <string>
-#include "util/encoding.h"
-
+#include "encoding.h"
 
 class Slice
 {
