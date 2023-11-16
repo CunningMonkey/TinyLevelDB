@@ -126,7 +126,7 @@ inline SkipList<Key, Comparator>::Iterator::Iterator(const SkipList *list)
 template <typename Key, typename Comparator>
 inline bool SkipList<Key, Comparator>::Iterator::Valid() const
 {
-    return _current == nullptr;
+    return _current != nullptr && _current != &_skiplist->_head;
 }
 
 template <typename Key, typename Comparator>
