@@ -37,8 +37,6 @@ private:
 
     friend class MemTableIterator;
 
-    // ~MemTable();
-
 public:
     MemTable() : _list(_cmp, &_arena), _reference(0) {}
     ~MemTable();

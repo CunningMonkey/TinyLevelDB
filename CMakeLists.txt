@@ -17,8 +17,8 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 add_subdirectory(third_party/googletest)
 
 
-add_executable(SkipListTest tests/SkipListTests.cpp ${SOURCES})
-add_executable(MemTableTest tests/MemTableTests.cpp ${SOURCES})
+add_executable(SkipListTest tests/skiplist_test.cpp ${SOURCES})
+add_executable(MemTableTest tests/memtable_test.cpp ${SOURCES})
 
 
 target_link_libraries(SkipListTest gtest_main)

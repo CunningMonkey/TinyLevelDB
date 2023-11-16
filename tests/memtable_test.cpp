@@ -123,6 +123,71 @@ TEST_F(MemTableTest, RandomOperationTest)
     }
 }
 
+class IteratorTest : public ::testing::Test
+{
+protected:
+    MemTable table;
+
+    void SetUp() override
+    {
+        Slice key1("key1");
+        Slice key2("key2");
+        Slice key3("key3");
+        Slice value1("value1");
+        Slice value2("value2");
+        Slice value3("value3");
+        table.Put(key1, value1, 1);
+        table.Put(key2, value2, 2);
+        table.Put(key3, value3, 3);
+    }
+};
+
+TEST_F(IteratorTest, IterateThroughElements)
+{
+    std::unique_ptr<Iterator> iter = std::unique_ptr<Iterator>(table.NewIterator());
+
+    iter->SeekToFirst();
+    ASSERT_TRUE(iter->Valid());
+    EXPECT_EQ(iter->Key().ToString(), "key1");
+    EXPECT_EQ(iter->Value().ToString(), "value1");
+
+    iter->Next();
+    ASSERT_TRUE(iter->Valid());
+    EXPECT_EQ(iter->Key().ToString(), "key2");
+    EXPECT_EQ(iter->Value().ToString(), "value2");
+
+    iter->Next();
+    ASSERT_TRUE(iter->Valid());
+    EXPECT_EQ(iter->Key().ToString(), "key3");
+    EXPECT_EQ(iter->Value().ToString(), "value3");
+
+    iter->Next();
+    ASSERT_FALSE(iter->Valid());
+}
+
+TEST_F(IteratorTest, IterateEmptyTable)
+{
+    MemTable emptyTable;
+    std::unique_ptr<Iterator> iter = std::unique_ptr<Iterator>(emptyTable.NewIterator());
+
+    iter->SeekToFirst();
+    ASSERT_FALSE(iter->Valid());
+}
+
+TEST_F(IteratorTest, EndOfTable)
+{
+    std::unique_ptr<Iterator> iter = std::unique_ptr<Iterator>(table.NewIterator());
+
+    iter->SeekToFirst();
+    while (iter->Valid())
+    {
+        iter->Next();
+    }
+
+    // 在到达表末尾后，迭代器应该是无效的
+    ASSERT_FALSE(iter->Valid());
+}
+
 int main(int argc, char **argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
