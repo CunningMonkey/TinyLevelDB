@@ -8,22 +8,18 @@ void BuildTable(Iterator *iter, const char *filename)
     while (iter->Valid())
     {
         builder->Add(iter->Key(), iter->Value());
-
         iter->Next();
     }
 }
 
 void TableBuilder::Add(const Slice &key, const Slice &value)
 {
-    // Write key size and key
-    uint32_t key_size = key.size();
-    _table_file.write((const char *)&key_size, sizeof(key_size));
-    _table_file.write(key.data(), key_size);
-
-    // Write value size and value
-    uint32_t value_size = value.size();
-    _table_file.write((const char *)&value_size, sizeof(value_size));
-    _table_file.write(value.data(), value_size);
+    _block_builder.Add(key, value);
+    if (_block_builder.Size() >= BLOCKSIZE)
+    {
+        _table_file << _block_builder.Finish();
+        _block_builder.Reset();
+    }
 }
 
 void TableBuilder::Finish()
