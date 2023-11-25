@@ -17,7 +17,7 @@ void TableBuilder::Add(const Slice &key, const Slice &value)
     _block_builder.Add(key, value);
     if (_block_builder.Size() >= BLOCKSIZE)
     {
-        _table_file << _block_builder.Finish();
+        WriteBlock(_block_builder, _table_file);
         _block_builder.Reset();
     }
 }

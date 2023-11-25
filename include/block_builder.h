@@ -4,34 +4,23 @@
 #include "slice.h"
 #include <fstream>
 
-void WriteBlock(const std::string &buffer, const std::vector<uint32_t> &restarts, std::ofstream &out)
-{
-    out.write(buffer.data(), buffer.size());
-
-    // Write the restarts to the output stream
-    for (const auto restart : restarts)
-    {
-        out.write(reinterpret_cast<const char *>(&restart), sizeof(restart));
-    }
-
-    // writer the number of restarts to the output stream file at the BLOCKSIZE - sizeof(uint32_t) offset
-    uint32_t num_restarts = restarts.size();
-}
+extern size_t RESTART_INTERVAL;
 
 class BlockBuilder
 {
 public:
-    BlockBuilder();
-    ~BlockBuilder();
+    BlockBuilder() : _counter(0), _record_restart(false), _buffer(), _restarts() {}
 
     void Reset();
-    bool Add(const Slice &key, const Slice &value);
-    std::string Finish();
-    size_t Size() const { return buffer_.size(); }
+    void Add(const Slice &key, const Slice &value);
+    Slice Finish();
+    size_t Size() const { return _buffer.size(); }
 
 private:
-    std::string buffer_;
-    std::vector<uint32_t> restarts_;
-    int counter_;
-    bool finished_;
+    std::string _buffer;
+    std::vector<uint32_t> _restarts;
+    size_t _counter;
+    bool _record_restart;
 };
+
+void WriteBlock(BlockBuilder &_block_builder, std::ofstream &out);
