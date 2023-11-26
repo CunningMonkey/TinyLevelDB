@@ -18,6 +18,8 @@ void BlockBuilder::Reset()
 
 void BlockBuilder::Add(const Slice &key, const Slice &value)
 {
+    if (_buffer.size() == 0)
+        _first_key = key;
     uint32_t key_length = key.size();
     uint32_t value_length = value.size();
     _buffer.append(reinterpret_cast<const char *>(&key_length), sizeof(key_length));

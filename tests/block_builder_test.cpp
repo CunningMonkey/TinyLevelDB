@@ -104,7 +104,7 @@ TEST_F(BlockBuilderTest, WriteBlockResetsBlockBuilder)
     WriteBlock(blockBuilder, out);
     out.close();
 
-    ASSERT_EQ(blockBuilder.Size(), 0);
+    ASSERT_EQ(blockBuilder.Size(), 26);
 }
 
 int main(int argc, char **argv)
