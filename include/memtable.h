@@ -41,12 +41,21 @@ public:
     MemTable() : _list(_cmp, &_arena), _reference(0) {}
     ~MemTable();
 
-    void Put(Slice &key, Slice &value, uint64_t sequence_num);
-    void Delete(Slice &key, uint64_t sequence_num);
-    bool Get(Slice &key, uint64_t sequence_num, std::string &value);
+    void Put(const Slice &key, const Slice &value, const uint64_t sequence_num);
+    void Delete(const Slice &key, const uint64_t sequence_num);
+    bool Get(const Slice &key, const uint64_t sequence_num, std::string &value);
 
     void Ref() { ++_reference; }
-    void UnRef() { --_reference; }
+    void UnRef()
+    {
+        --_reference;
+        if (_reference == 0)
+        {
+            delete this;
+        }
+    }
+
+    uint64_t ApproximateMemoryUsage() { return _arena.MemoryUsage(); }
 
     Iterator *NewIterator();
 };

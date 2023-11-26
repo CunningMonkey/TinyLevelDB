@@ -5,7 +5,7 @@ MemTable::~MemTable()
     assert(_reference == 0);
 }
 
-void MemTable::Put(Slice &key, Slice &value, uint64_t sequence_num)
+void MemTable::Put(const Slice &key, const Slice &value, const uint64_t sequence_num)
 {
     size_t key_length = key.size() + 8;
     size_t size_length = sizeof(size_t);
@@ -20,7 +20,7 @@ void MemTable::Put(Slice &key, Slice &value, uint64_t sequence_num)
     _list.Put(new_key);
 }
 
-void MemTable::Delete(Slice &key, uint64_t sequence_num)
+void MemTable::Delete(const Slice &key, const uint64_t sequence_num)
 {
     size_t key_length = key.size() + 8;
     size_t size_length = sizeof(size_t);
@@ -32,7 +32,7 @@ void MemTable::Delete(Slice &key, uint64_t sequence_num)
     _list.Put(new_key);
 }
 
-bool MemTable::Get(Slice &key, uint64_t sequence_num, std::string &value)
+bool MemTable::Get(const Slice &key, const uint64_t sequence_num, std::string &value)
 {
     size_t key_length = key.size() + 8;
     size_t size_length = sizeof(size_t);
