@@ -78,6 +78,21 @@ TEST_F(MemTableTest, MultipleDeleteTest)
     EXPECT_FALSE(found);
 }
 
+TEST_F(MemTableTest, MultipleVersionPut) {
+    Slice key0("key0");
+    Slice key1("key1");
+    Slice value1("value1");
+    Slice value2("value2");
+    Slice value3("value3");
+    table.Put(key0, value3, 1);
+    table.Put(key1, value1, 2);
+    table.Put(key1, value2, 3);
+    table.Put(key1, value3, 4);
+    std::string result;
+    bool found = table.Get(key1, 3, result);
+    EXPECT_EQ(result, value2.ToString());
+}
+
 TEST_F(MemTableTest, SequentialTest)
 {
     for (uint64_t i = 0; i < 1000; ++i)
@@ -148,17 +163,20 @@ TEST_F(IteratorTest, IterateThroughElements)
 
     iter->SeekToFirst();
     ASSERT_TRUE(iter->Valid());
-    EXPECT_EQ(iter->Key().ToString(), "key1");
+    std::string key(iter->Key().data(),  iter->Key().size()-8);
+    EXPECT_EQ(key, "key1");
     EXPECT_EQ(iter->Value().ToString(), "value1");
 
     iter->Next();
     ASSERT_TRUE(iter->Valid());
-    EXPECT_EQ(iter->Key().ToString(), "key2");
+    std::string key2(iter->Key().data(),  iter->Key().size()-8);
+    EXPECT_EQ(key2, "key2");
     EXPECT_EQ(iter->Value().ToString(), "value2");
 
     iter->Next();
     ASSERT_TRUE(iter->Valid());
-    EXPECT_EQ(iter->Key().ToString(), "key3");
+    std::string key3(iter->Key().data(),  iter->Key().size()-8);
+    EXPECT_EQ(key3, "key3");
     EXPECT_EQ(iter->Value().ToString(), "value3");
 
     iter->Next();
@@ -184,7 +202,6 @@ TEST_F(IteratorTest, EndOfTable)
         iter->Next();
     }
 
-    // 在到达表末尾后，迭代器应该是无效的
     ASSERT_FALSE(iter->Valid());
 }
 

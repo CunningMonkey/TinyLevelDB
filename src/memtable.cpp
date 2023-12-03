@@ -2,7 +2,7 @@
 
 void MemTable::Put(const Slice &key, const Slice &value,
                    const uint64_t sequence_num) {
-    size_t key_length = key.size() + 8;
+    size_t key_length = key.size() + sizeof(sequence_num);
     size_t size_length = sizeof(size_t);
     size_t value_length = value.size();
     char *new_key =

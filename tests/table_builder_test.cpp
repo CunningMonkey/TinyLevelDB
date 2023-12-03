@@ -8,8 +8,8 @@ protected:
 
     void SetUp() override
     {
-        // 设置一个临时文件名用于测试
-        tableBuilder = new TableBuilder("temp_test_file");
+        std::string filename("temp_test_file");
+        tableBuilder = new TableBuilder(filename);
     }
 
     void TearDown() override

@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iterator>
 #include <memory>
+#include <mutex>
 #include <sstream>
 #include <string>
 
@@ -15,7 +16,7 @@ DBImpl::~DBImpl() {}
 bool DBImpl::Open(const std::string name) {
     _memtable = new MemTable;
     _db = name;
-    std::ifstream inputFile("CURRENT");
+    std::ifstream inputFile(_db + "/CURRENT");
     if (!inputFile.is_open()) {
         std::cerr << "cannot open CURRENT file!" << std::endl;
         return false;
@@ -40,6 +41,33 @@ bool DBImpl::Open(const std::string name) {
 
 bool DBImpl::Put(const Slice &key, const Slice &value) {
     _memtable->Put(key, value, _sequence_num++);
+    AfterWriteMemtable();
+    return true;
+}
+
+bool DBImpl::Get(const Slice &key, std::string &value) {
+    bool found = _memtable->Get(key, _sequence_num, value);
+    if (found)
+        return true;
+    {
+        std::lock_guard<std::mutex> lk(_mtx);
+        if (_immutable_memtable) {
+            found = _immutable_memtable->Get(key, _sequence_num, value);
+            if (found)
+                return true;
+        }
+    }
+
+    return false;
+}
+
+bool DBImpl::Delete(const Slice &key) {
+    _memtable->Delete(key, _sequence_num++);
+    AfterWriteMemtable();
+    return true;
+}
+
+void DBImpl::AfterWriteMemtable() {
     if (_memtable->ApproximateMemoryUsage() > _options.write_buffer_size) {
         {
             std::unique_lock<std::mutex> lk(_mtx);
@@ -50,19 +78,6 @@ bool DBImpl::Put(const Slice &key, const Slice &value) {
         }
         _cond_var.notify_all();
     }
-    return true;
-}
-
-bool DBImpl::Get(const Slice &key, std::string &value) {
-    bool found = _memtable->Get(key, _sequence_num, value);
-    if (found)
-        return true;
-    return false;
-}
-
-bool DBImpl::Delete(const Slice &key) {
-    _memtable->Delete(key, _sequence_num++);
-    return false;
 }
 
 bool DBImpl::Start() {
@@ -106,6 +121,7 @@ void DBImpl::CompactLevel0Table() {
         delete _immutable_memtable;
         _version.AddNewTable(0, fileNumber, std::move(startKey.ToString()),
                              std::move(endKey.ToString()));
+        FlushManifest();
     }
     _cond_var.notify_all();
 }
@@ -113,6 +129,23 @@ void DBImpl::CompactLevel0Table() {
 void DBImpl::FlushManifest() {
     ++_current;
     std::string fileName = _db + "/MANIFEST_" + std::to_string(_current);
-    std::ofstream writeFile(fileName);
-    
+    std::ofstream manifestFile(fileName);
+    if (manifestFile.is_open()) {
+        std::string buffer = _version.EncodeSSTableMetaDatas();
+        manifestFile.write(buffer.c_str(), buffer.size());
+        manifestFile.close();
+    } else {
+        std::cout << "Cannot open file: " << fileName << std::endl;
+        exit(1);
+    }
+    fileName = _db + "/CURRENT";
+    std::ofstream currentFile(fileName, std::ios::out | std::ios::trunc);
+    if (currentFile.is_open()) {
+        currentFile.write(reinterpret_cast<char *>(&_current),
+                          sizeof(_current));
+        currentFile.close();
+    } else {
+        std::cout << "Cannot open file: " << fileName << std::endl;
+        exit(1);
+    }
 }

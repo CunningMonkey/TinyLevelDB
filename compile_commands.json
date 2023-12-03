@@ -1,122 +1,122 @@
 [
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/SkipListTest.dir/tests/skiplist_test.o -c /home/wukong/TinyLevelDB/tests/skiplist_test.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/SkipListTest.dir/tests/skiplist_test.o -c /home/wukong/TinyLevelDB/tests/skiplist_test.cpp",
   "file": "/home/wukong/TinyLevelDB/tests/skiplist_test.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/SkipListTest.dir/src/arena.o -c /home/wukong/TinyLevelDB/src/arena.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/SkipListTest.dir/src/arena.o -c /home/wukong/TinyLevelDB/src/arena.cpp",
   "file": "/home/wukong/TinyLevelDB/src/arena.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/SkipListTest.dir/src/memtable.o -c /home/wukong/TinyLevelDB/src/memtable.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/SkipListTest.dir/src/memtable.o -c /home/wukong/TinyLevelDB/src/memtable.cpp",
   "file": "/home/wukong/TinyLevelDB/src/memtable.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/SkipListTest.dir/src/table_builder.o -c /home/wukong/TinyLevelDB/src/table_builder.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/SkipListTest.dir/src/table_builder.o -c /home/wukong/TinyLevelDB/src/table_builder.cpp",
   "file": "/home/wukong/TinyLevelDB/src/table_builder.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/SkipListTest.dir/src/block_builder.o -c /home/wukong/TinyLevelDB/src/block_builder.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/SkipListTest.dir/src/block_builder.o -c /home/wukong/TinyLevelDB/src/block_builder.cpp",
   "file": "/home/wukong/TinyLevelDB/src/block_builder.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/MemTableTest.dir/tests/memtable_test.o -c /home/wukong/TinyLevelDB/tests/memtable_test.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/MemTableTest.dir/tests/memtable_test.o -c /home/wukong/TinyLevelDB/tests/memtable_test.cpp",
   "file": "/home/wukong/TinyLevelDB/tests/memtable_test.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/MemTableTest.dir/src/arena.o -c /home/wukong/TinyLevelDB/src/arena.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/MemTableTest.dir/src/arena.o -c /home/wukong/TinyLevelDB/src/arena.cpp",
   "file": "/home/wukong/TinyLevelDB/src/arena.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/MemTableTest.dir/src/memtable.o -c /home/wukong/TinyLevelDB/src/memtable.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/MemTableTest.dir/src/memtable.o -c /home/wukong/TinyLevelDB/src/memtable.cpp",
   "file": "/home/wukong/TinyLevelDB/src/memtable.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/MemTableTest.dir/src/table_builder.o -c /home/wukong/TinyLevelDB/src/table_builder.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/MemTableTest.dir/src/table_builder.o -c /home/wukong/TinyLevelDB/src/table_builder.cpp",
   "file": "/home/wukong/TinyLevelDB/src/table_builder.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/MemTableTest.dir/src/block_builder.o -c /home/wukong/TinyLevelDB/src/block_builder.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/MemTableTest.dir/src/block_builder.o -c /home/wukong/TinyLevelDB/src/block_builder.cpp",
   "file": "/home/wukong/TinyLevelDB/src/block_builder.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/BlockBuilderTest.dir/tests/block_builder_test.o -c /home/wukong/TinyLevelDB/tests/block_builder_test.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/BlockBuilderTest.dir/tests/block_builder_test.o -c /home/wukong/TinyLevelDB/tests/block_builder_test.cpp",
   "file": "/home/wukong/TinyLevelDB/tests/block_builder_test.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/BlockBuilderTest.dir/src/arena.o -c /home/wukong/TinyLevelDB/src/arena.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/BlockBuilderTest.dir/src/arena.o -c /home/wukong/TinyLevelDB/src/arena.cpp",
   "file": "/home/wukong/TinyLevelDB/src/arena.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/BlockBuilderTest.dir/src/memtable.o -c /home/wukong/TinyLevelDB/src/memtable.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/BlockBuilderTest.dir/src/memtable.o -c /home/wukong/TinyLevelDB/src/memtable.cpp",
   "file": "/home/wukong/TinyLevelDB/src/memtable.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/BlockBuilderTest.dir/src/table_builder.o -c /home/wukong/TinyLevelDB/src/table_builder.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/BlockBuilderTest.dir/src/table_builder.o -c /home/wukong/TinyLevelDB/src/table_builder.cpp",
   "file": "/home/wukong/TinyLevelDB/src/table_builder.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/BlockBuilderTest.dir/src/block_builder.o -c /home/wukong/TinyLevelDB/src/block_builder.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/BlockBuilderTest.dir/src/block_builder.o -c /home/wukong/TinyLevelDB/src/block_builder.cpp",
   "file": "/home/wukong/TinyLevelDB/src/block_builder.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/TableBuilderTest.dir/tests/table_builder_test.o -c /home/wukong/TinyLevelDB/tests/table_builder_test.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/TableBuilderTest.dir/tests/table_builder_test.o -c /home/wukong/TinyLevelDB/tests/table_builder_test.cpp",
   "file": "/home/wukong/TinyLevelDB/tests/table_builder_test.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/TableBuilderTest.dir/src/arena.o -c /home/wukong/TinyLevelDB/src/arena.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/TableBuilderTest.dir/src/arena.o -c /home/wukong/TinyLevelDB/src/arena.cpp",
   "file": "/home/wukong/TinyLevelDB/src/arena.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/TableBuilderTest.dir/src/memtable.o -c /home/wukong/TinyLevelDB/src/memtable.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/TableBuilderTest.dir/src/memtable.o -c /home/wukong/TinyLevelDB/src/memtable.cpp",
   "file": "/home/wukong/TinyLevelDB/src/memtable.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/TableBuilderTest.dir/src/table_builder.o -c /home/wukong/TinyLevelDB/src/table_builder.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/TableBuilderTest.dir/src/table_builder.o -c /home/wukong/TinyLevelDB/src/table_builder.cpp",
   "file": "/home/wukong/TinyLevelDB/src/table_builder.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -std=gnu++17 -o CMakeFiles/TableBuilderTest.dir/src/block_builder.o -c /home/wukong/TinyLevelDB/src/block_builder.cpp",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -std=gnu++17 -o CMakeFiles/TableBuilderTest.dir/src/block_builder.o -c /home/wukong/TinyLevelDB/src/block_builder.cpp",
   "file": "/home/wukong/TinyLevelDB/src/block_builder.cpp"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB/third_party/googletest/googlemock",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -I/home/wukong/TinyLevelDB/third_party/googletest/googlemock/include -I/home/wukong/TinyLevelDB/third_party/googletest/googlemock -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++17 -o CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /home/wukong/TinyLevelDB/third_party/googletest/googlemock/src/gmock-all.cc",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -I/home/wukong/TinyLevelDB/third_party/googletest/googlemock/include -I/home/wukong/TinyLevelDB/third_party/googletest/googlemock -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++17 -o third_party/googletest/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /home/wukong/TinyLevelDB/third_party/googletest/googlemock/src/gmock-all.cc",
   "file": "/home/wukong/TinyLevelDB/third_party/googletest/googlemock/src/gmock-all.cc"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB/third_party/googletest/googlemock",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googlemock/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googlemock -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++17 -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /home/wukong/TinyLevelDB/third_party/googletest/googlemock/src/gmock_main.cc",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googlemock/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googlemock -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++17 -o third_party/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /home/wukong/TinyLevelDB/third_party/googletest/googlemock/src/gmock_main.cc",
   "file": "/home/wukong/TinyLevelDB/third_party/googletest/googlemock/src/gmock_main.cc"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB/third_party/googletest/googletest",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -I/home/wukong/TinyLevelDB/third_party/googletest/googletest/include -I/home/wukong/TinyLevelDB/third_party/googletest/googletest -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++17 -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /home/wukong/TinyLevelDB/third_party/googletest/googletest/src/gtest-all.cc",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -I/home/wukong/TinyLevelDB/third_party/googletest/googletest/include -I/home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++17 -o third_party/googletest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /home/wukong/TinyLevelDB/third_party/googletest/googletest/src/gtest-all.cc",
   "file": "/home/wukong/TinyLevelDB/third_party/googletest/googletest/src/gtest-all.cc"
 },
 {
-  "directory": "/home/wukong/TinyLevelDB/third_party/googletest/googletest",
-  "command": "/usr/bin/c++  -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++17 -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /home/wukong/TinyLevelDB/third_party/googletest/googletest/src/gtest_main.cc",
+  "directory": "/home/wukong/TinyLevelDB/build",
+  "command": "/usr/bin/g++ -I/home/wukong/TinyLevelDB/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest/include -isystem /home/wukong/TinyLevelDB/third_party/googletest/googletest -O2 -g -DNDEBUG -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++17 -o third_party/googletest/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /home/wukong/TinyLevelDB/third_party/googletest/googletest/src/gtest_main.cc",
   "file": "/home/wukong/TinyLevelDB/third_party/googletest/googletest/src/gtest_main.cc"
 }
 ]

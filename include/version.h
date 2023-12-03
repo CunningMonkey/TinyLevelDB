@@ -1,4 +1,5 @@
 #pragma once
+#include "comparator.h"
 #include "slice.h"
 #include <fstream>
 #include <iostream>
@@ -16,7 +17,7 @@ struct SSTableMetaData {
           _end(std::move(end)) {}
 };
 
-SSTableMetaData DecodeSSTableMetaData(std::string, SSTableMetaData &);
+SSTableMetaData DecodeSSTableMetaData(std::string, size_t& length);
 
 class Version {
   public:
@@ -25,9 +26,13 @@ class Version {
     void AddNewTable(uint8_t level, uint64_t fileNumber, std::string start, std::string end);
     uint64_t NextSSTableFileIndex();
     void SetNextNumber();
-    std::string DecodeSSTableMetaDatas();
-
+    void SetSequenceNumber(uint64_t sequence_number);
+    bool DecodeSSTableMetaDatas(const char* s, size_t length);
+    std::string EncodeSSTableMetaDatas();
+    uint64_t FindSSTable(const Slice& key); 
   private:
     std::map<uint8_t, std::vector<SSTableMetaData>> _stables;
     uint64_t _max_number;
+    uint64_t _sequence_number;
+    KeyComparator _cmp;
 };

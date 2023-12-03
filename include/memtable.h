@@ -8,16 +8,16 @@
 
 class MemTableIterator;
 
-inline const Slice GetKeyFromInternalKey(const char *const internalKey) {
-    size_t key_length = *(reinterpret_cast<const size_t *>(internalKey)) - 8;
+inline const Slice
+GetKeyAndSeqNumFromInternalKey(const char *const internalKey) {
+    size_t key_length = *(reinterpret_cast<const size_t *>(internalKey));
     const Slice key = Slice(internalKey + sizeof(size_t), key_length);
     return key;
 }
 
 inline const Slice GetValueFromInternalKey(const char *const internalKey) {
-    const Slice key = GetKeyFromInternalKey(internalKey);
-    const char *const value_start =
-        internalKey + key.size() + sizeof(size_t) + 8;
+    const Slice key = GetKeyAndSeqNumFromInternalKey(internalKey);
+    const char *const value_start = key.data() + key.size();
     size_t value_length = *(reinterpret_cast<const size_t *>(value_start));
     const Slice value = Slice(value_start + sizeof(size_t), value_length);
     return value;
@@ -73,7 +73,9 @@ class MemTableIterator : public Iterator {
 
     void SeekToFirst() override { _iter.SeekToFirst(); }
 
-    Slice Key() const override { return GetKeyFromInternalKey(_iter.key()); }
+    Slice Key() const override {
+        return GetKeyAndSeqNumFromInternalKey(_iter.key());
+    }
 
     Slice Value() const override {
         return GetValueFromInternalKey(_iter.key());
