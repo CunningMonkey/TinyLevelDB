@@ -2,9 +2,11 @@
 #include "db_imp.h"
 #include "memtable.h"
 #include "table_builder.h"
+#include <fstream>
 #include <iterator>
 #include <memory>
 #include <sstream>
+#include <string>
 
 DBImpl::DBImpl() {}
 
@@ -76,22 +78,41 @@ bool DBImpl::Start() {
 
 void DBImpl::BackgroundCompaction() {
     while (true) {
-        {
-            std::unique_lock<std::mutex> lk(_mtx);
-            _cond_var.wait(lk,
-                           [this] { return _immutable_memtable != nullptr; });
-            std::unique_ptr<TableBuilder> tableBuilder{};
-
-            for (auto it = _immutable_memtable->NewIterator(); it->Valid();
-                 it->Next()) {
-                Slice key = it->Key();
-                Slice value = it->Value();
-                tableBuilder->Add(key, value);
-            }
-            tableBuilder->Finish();
-            delete _immutable_memtable;
-
-        }
-        _cond_var.notify_all();
+        CompactLevel0Table();
     }
+}
+
+void DBImpl::CompactLevel0Table() {
+    {
+        std::unique_lock<std::mutex> lk(_mtx);
+        _cond_var.wait(lk, [this] { return _immutable_memtable != nullptr; });
+        uint64_t fileNumber = _version.NextSSTableFileIndex();
+        std::string fileName = _db + "/MANIFEST_" + std::to_string(fileNumber);
+        std::unique_ptr<TableBuilder> tableBuilder =
+            std::make_unique<TableBuilder>(fileName);
+        auto it = _immutable_memtable->NewIterator();
+        it->SeekToFirst();
+        Slice startKey = it->Value();
+        Slice endKey;
+
+        for (auto it = _immutable_memtable->NewIterator(); it->Valid();
+             it->Next()) {
+            Slice key = it->Key();
+            Slice value = it->Value();
+            tableBuilder->Add(key, value);
+            endKey = key;
+        }
+        tableBuilder->Finish();
+        delete _immutable_memtable;
+        _version.AddNewTable(0, fileNumber, std::move(startKey.ToString()),
+                             std::move(endKey.ToString()));
+    }
+    _cond_var.notify_all();
+}
+
+void DBImpl::FlushManifest() {
+    ++_current;
+    std::string fileName = _db + "/MANIFEST_" + std::to_string(_current);
+    std::ofstream writeFile(fileName);
+    
 }

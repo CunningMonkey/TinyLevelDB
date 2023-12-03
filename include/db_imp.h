@@ -25,6 +25,8 @@ class DBImpl {
     bool Start();
     void CompactMemTable();
     void BackgroundCompaction();
+    void CompactLevel0Table();
+    void FlushManifest();
 
   private:
     std::string _db;

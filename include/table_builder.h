@@ -31,7 +31,7 @@ public:
     void Finish();
     void Flush();
 
-    TableBuilder(const char *filename) : _table_file(filename, std::ios::app), _offset(0)
+    TableBuilder(std::string& fileName) : _table_file(fileName, std::ios::app), _offset(0)
     {
     }
 
