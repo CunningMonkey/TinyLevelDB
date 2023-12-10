@@ -18,8 +18,9 @@ struct InternalKeyComparator
     int operator()(const char *const key1, const char *const key2)
     {
         size_t size_t_size = sizeof(size_t);
-        size_t length1 = *(reinterpret_cast<const size_t *>(key1)) - 8;
-        size_t length2 = *(reinterpret_cast<const size_t *>(key2)) - 8;
+        size_t seq_num = sizeof(uint64_t);
+        size_t length1 = *(reinterpret_cast<const size_t *>(key1)) - seq_num;
+        size_t length2 = *(reinterpret_cast<const size_t *>(key2)) - seq_num;
         const Slice k1 = Slice(key1 + size_t_size, length1);
         const Slice k2 = Slice(key2 + size_t_size, length2);
         int r = k1.compare(k2);
@@ -28,8 +29,8 @@ struct InternalKeyComparator
             return r;
         }
         assert(length1 == length2);
-        uint64_t seq1 = *(reinterpret_cast<const uint64_t *>(key1 + size_t_size + length1)) >> 8;
-        uint64_t seq2 = *(reinterpret_cast<const uint64_t *>(key2 + size_t_size + length2)) >> 8;
+        uint64_t seq1 = *(reinterpret_cast<const uint64_t *>(key1 + size_t_size + length1));
+        uint64_t seq2 = *(reinterpret_cast<const uint64_t *>(key2 + size_t_size + length2));
         if (seq1 == seq2)
         {
             return 0;

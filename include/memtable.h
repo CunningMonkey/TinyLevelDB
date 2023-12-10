@@ -4,6 +4,7 @@
 #include "encoding.h"
 #include "iterator.h"
 #include "skiplist.h"
+#include "slice.h"
 #include <string>
 
 class MemTableIterator;
@@ -17,7 +18,7 @@ GetKeyAndSeqNumFromInternalKey(const char *const internalKey) {
 
 inline const Slice GetValueFromInternalKey(const char *const internalKey) {
     const Slice key = GetKeyAndSeqNumFromInternalKey(internalKey);
-    const char *const value_start = key.data() + key.size();
+    const char *const value_start = key.data() + key.size() + 1;
     size_t value_length = *(reinterpret_cast<const size_t *>(value_start));
     const Slice value = Slice(value_start + sizeof(size_t), value_length);
     return value;
@@ -40,16 +41,6 @@ class MemTable {
     void Put(const Slice &key, const Slice &value, const uint64_t sequence_num);
     void Delete(const Slice &key, const uint64_t sequence_num);
     bool Get(const Slice &key, const uint64_t sequence_num, std::string &value);
-
-    // void Ref() { ++_reference; }
-    // void UnRef()
-    // {
-    //     --_reference;
-    //     if (_reference == 0)
-    //     {
-    //         delete this;
-    //     }
-    // }
 
     uint64_t ApproximateMemoryUsage() { return _arena.MemoryUsage(); }
 

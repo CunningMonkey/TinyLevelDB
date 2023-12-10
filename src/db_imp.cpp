@@ -56,6 +56,7 @@ bool DBImpl::Get(const Slice &key, std::string &value) {
             if (found)
                 return true;
         }
+        _version.Get(key, _sequence_num, value);
     }
 
     return false;

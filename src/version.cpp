@@ -47,14 +47,10 @@ void Version::AddNewTable(uint8_t level, uint64_t fileNumber, std::string start,
     _stables[level].emplace_back(fileNumber, std::move(start), std::move(end));
 }
 
-uint64_t Version::FindSSTable(const Slice &key) {
-    KeyComparator cmp;
-    for (const auto &pair : _stables) {
-        for (auto it = pair.second.rbegin(); it != pair.second.rend(); ++it) {
-                        
-        }
-    }
-    return 0;
+bool Version::SearchInTable(const char *key, const uint64_t fileNumber) {
+    // TODO
+    InternalKeyComparator cmp;
+    return true;
 }
 
 bool Version::DecodeSSTableMetaDatas(const char *s, size_t length) {
@@ -99,4 +95,28 @@ std::string Version::EncodeSSTableMetaDatas() {
         }
     }
     return buffer;
+}
+
+bool Version::Get(const Slice &key, const uint64_t sequence_num,
+                  std::string &value) {
+    InternalKeyComparator cmp;
+    size_t seq_size = sizeof(sequence_num);
+    size_t key_length = key.size() + seq_size;
+    size_t size_length = sizeof(size_t);
+    std::string lookup_key(sizeof(size_t) + key_length, '\0');
+    std::memcpy(&lookup_key[0], &key_length, size_length);
+    std::memcpy(&lookup_key[size_length], key.data(), key_length - seq_size);
+    std::memcpy(&lookup_key[key_length + size_length - seq_size], &sequence_num,
+                seq_size);
+    const char *internal_key = lookup_key.c_str();
+    for (const auto &pair : _stables) {
+        for (auto it = pair.second.rbegin(); it != pair.second.rend(); ++it) {
+            int start_cmp_res = cmp(internal_key, it->_start.c_str());
+            int end_cmp_res = cmp(internal_key, it->_end.c_str());
+            if (start_cmp_res >= 0 && end_cmp_res <= 0) {
+                bool found = SearchInTable(internal_key, it->_fileNumber);
+            }
+        }
+    }
+    return false;
 }

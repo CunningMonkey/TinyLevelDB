@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 
 enum ValueType
 {
@@ -46,3 +47,4 @@ inline const char *GetVarint32Ptr(const char *p, const char *limit,
     }
     return GetVarint32PtrFallback(p, limit, value);
 };
+
