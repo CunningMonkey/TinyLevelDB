@@ -1,4 +1,7 @@
 #pragma once
+#include "block_reader.h"
+#include "table_reader.h"
+#include "table_builder.h"
 #include "comparator.h"
 #include "slice.h"
 #include <fstream>
@@ -30,8 +33,8 @@ class Version {
     void SetSequenceNumber(uint64_t sequence_number);
     bool DecodeSSTableMetaDatas(const char *s, size_t length);
     std::string EncodeSSTableMetaDatas();
-    bool SearchInTable(const char* key, const uint64_t fileNumber);
-    bool Get(const Slice &key, const uint64_t sequence_num, std::string &value);
+    bool SearchInTable(const char *key, const uint64_t fileNumber, const std::string& db_path);
+    bool Get(const Slice &key, const uint64_t sequence_num, std::string &value, const std::string &db_path);
 
   private:
     std::map<uint8_t, std::vector<SSTableMetaData>> _stables;

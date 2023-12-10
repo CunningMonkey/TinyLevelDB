@@ -4,6 +4,38 @@
 #include <sstream>
 #include <vector>
 
+uint32_t GetIndexNumberFromTable(std::ifstream &file_stream,
+                                 std::string table_name) {
+    uint32_t footer_size = sizeof(uint32_t);
+    std::streampos file_size = file_stream.tellg();
+    if (footer_size > file_size) {
+        std::cerr << "SSTale file: " << table_name
+                  << " size is invalid: less than: " << footer_size
+                  << std::endl;
+        return false;
+    }
+    file_stream.seekg(-footer_size, std::ios::end);
+    std::vector<char> buffer(footer_size);
+    file_stream.read(buffer.data(), footer_size);
+    std::string footer_str(buffer.begin(), buffer.end());
+    uint32_t index_number =
+        *(reinterpret_cast<const uint32_t *>(footer_str.c_str()));
+    return index_number;
+}
+
+Index GetDataPosFromTable(std::ifstream &file_stream, uint32_t index_number, std::string table_name) {
+    uint32_t index_size = index_number * sizeof(Index);
+    uint32_t footer_size = sizeof(uint32_t);
+    std::streampos file_size = file_stream.tellg();
+    if (footer_size + index_size > file_size) {
+        std::cerr << "SSTale file: " << table_name
+                  << " size is invalid: less than: " << footer_size
+                  << std::endl;
+        return ;
+    }
+}
+
+
 SSTableMetaData DecodeSSTableMetaData(const char *s, size_t &length) {
     size_t number = *(reinterpret_cast<const size_t *const>(s));
     s += sizeof(size_t);
@@ -47,10 +79,23 @@ void Version::AddNewTable(uint8_t level, uint64_t fileNumber, std::string start,
     _stables[level].emplace_back(fileNumber, std::move(start), std::move(end));
 }
 
-bool Version::SearchInTable(const char *key, const uint64_t fileNumber) {
+bool Version::SearchInTable(const char *key, const uint64_t fileNumber,
+                            const std::string &db_path) {
     // TODO
     InternalKeyComparator cmp;
-    return true;
+    std::string table_file_name =
+        db_path + "/sstable_" + std::to_string(fileNumber);
+    std::ifstream file_stream(table_file_name,
+                              std::ios::binary | std::ios::ate);
+    if (file_stream.is_open()) {
+        uint32_t index_number =
+            GetIndexNumberFromTable(file_stream, table_file_name);
+        file_stream.close();
+    } else {
+        std::cerr << "Unable ot open SStable file: " << table_file_name
+                  << std::endl;
+    }
+    return false;
 }
 
 bool Version::DecodeSSTableMetaDatas(const char *s, size_t length) {
@@ -98,7 +143,7 @@ std::string Version::EncodeSSTableMetaDatas() {
 }
 
 bool Version::Get(const Slice &key, const uint64_t sequence_num,
-                  std::string &value) {
+                  std::string &value, const std::string &db_path) {
     InternalKeyComparator cmp;
     size_t seq_size = sizeof(sequence_num);
     size_t key_length = key.size() + seq_size;
@@ -114,7 +159,8 @@ bool Version::Get(const Slice &key, const uint64_t sequence_num,
             int start_cmp_res = cmp(internal_key, it->_start.c_str());
             int end_cmp_res = cmp(internal_key, it->_end.c_str());
             if (start_cmp_res >= 0 && end_cmp_res <= 0) {
-                bool found = SearchInTable(internal_key, it->_fileNumber);
+                bool found =
+                    SearchInTable(internal_key, it->_fileNumber, db_path);
             }
         }
     }

@@ -1,4 +1,5 @@
-# cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.10)
+
 
 project (TinyLevelDB)
 
@@ -8,9 +9,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(SOURCES
     src/arena.cpp
+    src/block_builder.cpp
+    src/blocker_reader.cpp
+    src/block_reader.cpp
+    src/db_imp.cpp
     src/memtable.cpp
     src/table_builder.cpp
-    src/block_builder.cpp
+    src/table_reader.cpp
+    src/version.cpp
     )
 
 file(GLOB TEST_FILES "tests/*.cpp")

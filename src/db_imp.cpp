@@ -56,7 +56,7 @@ bool DBImpl::Get(const Slice &key, std::string &value) {
             if (found)
                 return true;
         }
-        _version.Get(key, _sequence_num, value);
+        _version.Get(key, _sequence_num, value, _db);
     }
 
     return false;
@@ -102,10 +102,11 @@ void DBImpl::CompactLevel0Table() {
     {
         std::unique_lock<std::mutex> lk(_mtx);
         _cond_var.wait(lk, [this] { return _immutable_memtable != nullptr; });
-        uint64_t fileNumber = _version.NextSSTableFileIndex();
-        std::string fileName = _db + "/MANIFEST_" + std::to_string(fileNumber);
+        uint64_t sstable_number = _version.NextSSTableFileIndex();
+        std::string sstable_filename =
+            _db + "/sstable_" + std::to_string(sstable_number);
         std::unique_ptr<TableBuilder> tableBuilder =
-            std::make_unique<TableBuilder>(fileName);
+            std::make_unique<TableBuilder>(sstable_filename);
         auto it = _immutable_memtable->NewIterator();
         it->SeekToFirst();
         Slice startKey = it->Value();
@@ -120,7 +121,7 @@ void DBImpl::CompactLevel0Table() {
         }
         tableBuilder->Finish();
         delete _immutable_memtable;
-        _version.AddNewTable(0, fileNumber, std::move(startKey.ToString()),
+        _version.AddNewTable(0, sstable_number, std::move(startKey.ToString()),
                              std::move(endKey.ToString()));
         FlushManifest();
     }

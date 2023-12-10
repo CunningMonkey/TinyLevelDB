@@ -26,7 +26,7 @@ class TableBuilder {
   public:
     void Add(const Slice &key, const Slice &value);
     void Finish();
-    void Flush();
+    std::string encode_index(const Index &index);
 
     TableBuilder(std::string &fileName)
         : _table_file(fileName, std::ios::app), _offset(0) {}
@@ -34,17 +34,11 @@ class TableBuilder {
     ~TableBuilder() { _table_file.close(); }
 
   private:
+    void flush();
+    void appendFooter();
     std::ofstream _table_file;
     BlockBuilder _block_builder;
     std::vector<Index> _indexes;
     uint32_t _offset;
 
-    std::string encode_index(const Index &index) {
-        std::string result;
-        uint32_t offset = index.Offset();
-        uint32_t size = index.Size();
-        result.append(reinterpret_cast<const char *>(offset), sizeof(offset));
-        result.append(reinterpret_cast<const char *>(size), sizeof(size));
-        return result;
-    }
 };
